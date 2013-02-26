@@ -1,9 +1,10 @@
 class EmailTemplatesUiGrailsPlugin {
-  def version = "0.1"
+  def version = "0.1.1"
   def grailsVersion = "2.0 > *"
   def dependsOn = [:]
   def pluginExcludes = [
-      "grails-app/views/error.gsp"
+      "grails-app/views/error.gsp",
+      "grails-app/domain/org/grails/plugin/emailTemplates/test/*"
   ]
 
   def title = "Email Templates Ui Plugin" // Headline display name of the plugin
