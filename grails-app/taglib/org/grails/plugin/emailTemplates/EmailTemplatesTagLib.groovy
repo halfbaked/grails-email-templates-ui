@@ -1,6 +1,12 @@
 package org.grails.plugin.emailTemplates
 
+
+import org.codehaus.groovy.grails.plugins.web.taglib.FormTagLib
+
+
 class EmailTemplatesTagLib {
+
+  def formTagLib = new FormTagLib()
 
   static namespace = 'emailTemplates'
 
@@ -31,9 +37,10 @@ class EmailTemplatesTagLib {
         url:'/emailTemplates/sendTestEmail',
         type:'POST',
         data: {
+          bccEmails: jQuery("input[name=bccEmails]").val(),
           recipient: jQuery("input[name=testEmailRecipient]").val(),
           subject: jQuery("input[name=subject]").val(),
-          body: jQuery("textarea[name=body]").val(),
+          body: CKEDITOR.instances.body.getData(), 
           id: jQuery("input[name=id]").val()
         }
       })
@@ -72,19 +79,19 @@ class EmailTemplatesTagLib {
   def emailParametersHelp = { attrs ->
     out << """
 <!-- Button to trigger modal -->
-<a href="#parametersModal" data-toggle="modal" style="background-color:#eee;margin-left:10px;margin-right:10px;margin-top:5px;padding:8px;border-radius:4px;">Parameters</i></a>
+<a href="#parametersModal" data-toggle="modal" style="background-color:#eee;margin-left:10px;margin-right:10px;margin-top:5px;padding:8px;border-radius:4px;">Merge Tags</i></a>
 
 <!-- Modal -->
 <div id="parametersModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Dynamic Data Parameters Help</h3>
+    <h3 id="myModalLabel">Merge Tags Help</h3>
   </div>
   <div class="modal-body">
     <div>
       <p>
         You can include dynamic data in your emails. Dynamic data is included using the mustache templating language. See the <a href="http://mustache.github.com/mustache.5.html" target="_blank">offical manual</a> for the complete syntax. 
-        Below is a list of the data you can include in this email
+        Below is a list of the possible merge tags you can include in this email
       </p>
       <hr>
 """ 
@@ -95,7 +102,7 @@ class EmailTemplatesTagLib {
       else {
         out << """<hr><p class="quiet" style="font-weight:bold;">${key}</p>"""
         value.each { 
-          out << """<code>{{ $key.$it }}</code><br>"""  
+          out << """<code>{{$key.$it}}</code><br>"""  
         }
       }
     }
@@ -103,7 +110,7 @@ class EmailTemplatesTagLib {
       out << """<hr> <p class="quiet" style="font-weight:bold;">Other</p> """
       other.each {
         out << """
-          <code>{{ $it }}</code>
+          <code>{{$it}}</code>
         """
       }
     }
@@ -113,5 +120,27 @@ class EmailTemplatesTagLib {
 </div>
     """
   }
+
+  def emailTemplateLayoutSelect = { attrs ->
+    def emailTemplateLayouts = EmailTemplateLayout.findAllByDefaultLayout(false)
+    if (emailTemplateLayouts)  {
+      out << """
+        <div>
+          <label>Layout</label>
+      """
+      def selectAttrs = [:]
+      selectAttrs.noSelection = ['':'Default']
+      selectAttrs.from = emailTemplateLayouts
+      selectAttrs.name = attrs.name
+      selectAttrs.value = attrs.value
+      selectAttrs.optionValue = 'name'
+      selectAttrs.optionKey = 'id'
+      out << formTagLib.select(selectAttrs)
+      out << """
+        </div>
+      """
+    }
+  }
+
 }
 

@@ -21,12 +21,30 @@
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Locale</th>
+                <th>Layout</th>
               </tr>
             </thead>
             <tbody>
             <g:each in="${emailTemplateDataList}" var="emailTemplateData">
             <tr>
-              <td><g:link action="update" id="${emailTemplateData.id}">${emailTemplateData.name}</g:link></td>
+              <td><g:link action="show" id="${emailTemplateData.id}">${emailTemplateData.name}</g:link></td>
+              <td>
+                <g:if test="${emailTemplateData.defaultForCode}">
+                  DEFAULT
+                </g:if>
+                <g:else>
+                  ${emailTemplateData.locale?.displayName}                
+                </g:else>
+              </td>             
+              <td>
+                <g:if test="${!emailTemplateData.layout}">
+                  DEFAULT
+                </g:if>
+                <g:else>
+                  ${emailTemplateData.layout.name}                
+                </g:else>
+              </td>             
             </tr>
             </g:each>
             </tbody>
