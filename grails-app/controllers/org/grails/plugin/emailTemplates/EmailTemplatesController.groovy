@@ -8,27 +8,35 @@ class EmailTemplatesController {
   }
 
   def update = {
-    def emailTemplateData = EmailTemplateData.get(params.id)
-    if (!emailTemplateData){
-      response.sendError(404)
-    } else {     
-      if (request.method == 'POST') { 
-        emailTemplateData.properties = params
-        if (!emailTemplateData.hasErrors() && emailTemplateData.save(flush:true)){
-          redirect action:'show', id:emailTemplateData.id
+    try {
+      def emailTemplateData = EmailTemplateData.get(new Long(params.id))
+      if (!emailTemplateData){
+        response.sendError(404)
+      } else {     
+        if (request.method == 'POST') { 
+          emailTemplateData.properties = params
+          if (!emailTemplateData.hasErrors() && emailTemplateData.save(flush:true)){
+            redirect action:'show', id:emailTemplateData.id
+          }
         }
-      }
-      [emailTemplateData: emailTemplateData]
-    } 
+        [emailTemplateData: emailTemplateData]
+      } 
+    } catch (NumberFormatException nfe) { 
+      response.sendError(404)
+    }
   }
 
   def show = {
-    def emailTemplateData = EmailTemplateData.get(params.id)
-    if (!emailTemplateData){
+    try {
+      def emailTemplateData = EmailTemplateData.get(new Long(params.id))
+      if (!emailTemplateData){
+        response.sendError(404)
+      } else {     
+        [emailTemplateData: emailTemplateData]
+      } 
+    } catch (NumberFormatException nfe) { 
       response.sendError(404)
-    } else {     
-      [emailTemplateData: emailTemplateData]
-    } 
+    }
   }
 
   def duplicate = {

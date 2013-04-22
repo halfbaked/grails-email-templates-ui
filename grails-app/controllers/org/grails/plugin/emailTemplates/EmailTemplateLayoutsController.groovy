@@ -8,27 +8,39 @@ class EmailTemplateLayoutsController {
   }
 
   def update = {
-    def emailTemplateLayout = EmailTemplateLayout.get(params.id)
-    if (!emailTemplateLayout){
-      response.sendError(404)
-    } else {     
-      if (request.method == 'POST') { 
-        emailTemplateLayout.properties = params
-        if (!emailTemplateLayout.hasErrors() && emailTemplateLayout.save(flush:true)){
-          redirect action:'show', id:emailTemplateLayout.id
+    try {
+      def emailTemplateLayout = EmailTemplateLayout.get(new Long(params.id))
+      if (!emailTemplateLayout){
+        response.sendError(404)
+      } else {     
+        if (request.method == 'POST') { 
+          emailTemplateLayout.properties = params
+          if (!emailTemplateLayout.hasErrors() && emailTemplateLayout.save(flush:true)){
+            redirect action:'show', id:emailTemplateLayout.id
+          }
         }
-      }
-      [emailTemplateLayout: emailTemplateLayout]
-    } 
+        [emailTemplateLayout: emailTemplateLayout]
+      } 
+    } catch (NumberFormatException nfe) {
+      response.sendError(404)
+    }
   }
 
   def show = {
-    def emailTemplateLayout = EmailTemplateLayout.get(params.id)
-    if (!emailTemplateLayout){
+    try {
+      def emailTemplateLayout = EmailTemplateLayout.get(new Long(params.id))
+      if (!emailTemplateLayout){
+        response.sendError(404)
+      } else {     
+        [emailTemplateLayout: emailTemplateLayout]
+      } 
+    // The try/catch for NumberFormatException relates to the attempt by the UI to look up images whose
+    // src is a placeholder. Without this we would be seeing errors raised in logs and error emails sent.
+    // I had to attempt the Long conversion earlier, as otherwise Grails seems to wrap the exception in a number
+    // or other exceptions.
+    } catch (NumberFormatException nfe) { 
       response.sendError(404)
-    } else {     
-      [emailTemplateLayout: emailTemplateLayout]
-    } 
+    }
   }
 
   def add = {
