@@ -129,7 +129,7 @@ class EmailTemplatesTagLib {
           <label>Layout</label>
       """
       def selectAttrs = [:]
-      selectAttrs.noSelection = ['':'Default']
+      selectAttrs.noSelection = ['null':'Default']
       selectAttrs.from = emailTemplateLayouts
       selectAttrs.name = attrs.name
       selectAttrs.value = attrs.value
