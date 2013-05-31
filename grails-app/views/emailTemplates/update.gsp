@@ -27,7 +27,7 @@
               <g:hasErrors bean="${emailTemplateData}">
                 <div class="errors"><g:renderErrors bean="${emailTemplateData}" as="list" /></div>
               </g:hasErrors>
-              <emailTemplates:emailTemplateLayoutSelect name="layout.id" value="${emailTemplateData.layout.id}" />
+              <emailTemplates:emailTemplateLayoutSelect name="layout.id" value="${emailTemplateData.layout?.id}" />
               <g:if test="${!emailTemplateData.defaultForCode}">
                 <div>
                    <label>Locale</label>
