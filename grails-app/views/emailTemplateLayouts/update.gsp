@@ -50,6 +50,9 @@
                 <g:submitButton name="submit" value="Save Changes" class="btn btn-primary"></g:submitButton>
                 <g:link action="show" id="${emailTemplateLayout.id}" class="btn">Cancel</g:link>
               </div>
+              <div class="pull-right">
+                <emailTemplates:emailTemplateLayoutMergeTagsHelp scopes="${emailTemplateLayout.mergeTags()}" />
+              </div>
             </div>
           </g:form>
         </div> <!-- end span -->  

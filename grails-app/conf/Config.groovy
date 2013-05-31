@@ -22,3 +22,10 @@ log4j = {
 
     warn   'org.mortbay.log'
 }
+
+plugin.emailTemplates.defaultLayoutMergeTags = [
+  "name" : null,
+  "contact" : [
+    "email", "address", "tel"
+  ]
+]

@@ -142,5 +142,51 @@ class EmailTemplatesTagLib {
     }
   }
 
+  def emailTemplateLayoutMergeTagsHelp = { attrs ->
+    out << """
+<!-- Button to trigger modal -->
+<a href="#parametersModal" data-toggle="modal" style="background-color:#eee;margin-left:10px;margin-right:10px;margin-top:5px;padding:8px;border-radius:4px;">Merge Tags</i></a>
+
+<!-- Modal -->
+<div id="parametersModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Merge Tags Help</h3>
+  </div>
+  <div class="modal-body">
+    <div>
+      <p>The content of an email template using this layout will appear where you place the placeholder <i>\${emailContent}</i></p>
+      <p>
+        You can also include dynamic data in your layouts. Dynamic data is included using the mustache templating language. See the <a href="http://mustache.github.com/mustache.5.html" target="_blank">offical manual</a> for the complete syntax. 
+        Below is a list of the possible merge tags you can include in this layout
+      </p>
+      <hr>
+"""     
+    def other = []
+    attrs.scopes.each { key, value ->
+
+      if (!value) { other << key }
+      else {
+        out << """<hr><p class="quiet" style="font-weight:bold;">${key}</p>"""
+        value.each { 
+          out << """<code>{{$key.$it}}</code><br>"""  
+        }
+      }
+    }
+    if (other) {
+      out << """<hr> <p class="quiet" style="font-weight:bold;">Other</p> """
+      other.each {
+        out << """
+          <code>{{$it}}</code>
+        """
+      }
+    }
+    out << """
+    </div>
+  </div> 
+</div>
+    """
+  }
+
 }
 
