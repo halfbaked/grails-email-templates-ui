@@ -24,7 +24,7 @@ grails.project.dependency.resolution = {
         test(":spock:0.7", ":code-coverage:1.2.5", ":build-test-data:2.0.3"){
           export = false
         }
-        compile(":email-templates:0.6")
+        compile(":email-templates:0.9")
         runtime ":hibernate:$grailsVersion"
         compile ":ckeditor:3.6.3.0"
 

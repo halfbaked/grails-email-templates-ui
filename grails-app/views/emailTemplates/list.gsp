@@ -28,7 +28,12 @@
             <tbody>
             <g:each in="${emailTemplateDataList}" var="emailTemplateData">
             <tr>
-              <td><g:link action="show" id="${emailTemplateData.id}">${emailTemplateData.name}</g:link></td>
+              <td>
+                <g:link action="show" id="${emailTemplateData.id}">
+                  ${emailTemplateData.name}
+                  <g:if test="${!emailTemplateData.enabled}">(Disabled)</g:if>
+                </g:link>
+              </td>
               <td>
                 <g:if test="${emailTemplateData.defaultForCode}">
                   DEFAULT

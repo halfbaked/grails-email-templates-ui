@@ -12,3 +12,11 @@ Include the dependency in your application via BuildConfig.groovy
 
     runtime ":email-templates-ui:0.1"
 
+Merge Tag List
+--------------
+
+Where the merge tag refers to a list of data the only change you have to make is in the dataKeys() method of your emailTemplate, to place the merge tag within a list like so:
+
+invoice_items: [ InvoiceItem.dataKeys() ]
+
+

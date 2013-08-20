@@ -100,9 +100,17 @@ class EmailTemplatesTagLib {
 
       if (!value) { other << key }
       else {
-        out << """<hr><p class="quiet" style="font-weight:bold;">${key}</p>"""
-        value.each { 
-          out << """<code>{{$key.$it}}</code><br>"""  
+        if (value instanceof List){
+          value = value.first()
+          out << """<hr><p class="quiet" style="font-weight:bold;">${key}</p>"""
+          out << "<code>{{#$key}}<br />"
+          value.each { out << "&nbsp;&nbsp;{{$it}}<br>" }
+          out << "{{/$key}}</code>"
+        } else {
+          out << """<hr><p class="quiet" style="font-weight:bold;">${key}</p>"""
+          value.each { 
+            out << """<code>{{$key.$it}}</code><br>"""  
+          }
         }
       }
     }

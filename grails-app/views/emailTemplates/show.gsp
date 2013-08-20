@@ -11,7 +11,9 @@
     <div class="block">
       <div class="row-fluid">
         <div class="span12">
-          <header class="group"><h1 class="pull-left"><i class="icon-envelope"></i> ${emailTemplateData.name}</h1></header>
+          <header class="group">
+            <h1 class="pull-left"><i class="icon-envelope"></i> ${emailTemplateData.name}<g:if test="${!emailTemplateData.enabled}"> (Disabled)</g:if></h1>            
+          </header>
         </div>
       </div>
       <div class="row-fluid">
@@ -29,7 +31,10 @@
               <ul class="attributes">
                 <li class="group underline">
                   <label class="pull-left">Name</label>
-                  <span class="pull-right">${emailTemplateData.name}</span>
+                  <span class="pull-right">
+                    ${emailTemplateData.name}
+                    <g:if test="${!emailTemplateData.enabled}">(Disabled)</g:if>
+                  </span>
                 </li>
                 <g:if test="${!emailTemplateData.defaultForCode}">
                 <li class="group underline">

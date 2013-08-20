@@ -28,12 +28,16 @@
                 <div class="errors"><g:renderErrors bean="${emailTemplateData}" as="list" /></div>
               </g:hasErrors>
               <emailTemplates:emailTemplateLayoutSelect name="layout.id" value="${emailTemplateData.layout?.id}" />
+              <div>
+                 <label>Enabled</label>
+                 <g:checkBox name="enabled" value="${emailTemplateData.enabled}" />
+              </div>
               <g:if test="${!emailTemplateData.defaultForCode}">
                 <div>
                    <label>Locale</label>
                    <g:localeSelect name="locale" value="${emailTemplateData.locale}" />
                 </div>
-              </g:if>
+              </g:if>              
               <div>
                  <label>Bcc Emails</label>
                  <input class="span3" type="text" name="bccEmails" value="${emailTemplateData?.bccEmails}" />

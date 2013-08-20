@@ -1,7 +1,7 @@
 class EmailTemplatesUiGrailsPlugin {
-  def version = "0.7.2"
+  def version = "0.9.1"
   def grailsVersion = "2.0 > *"
-  def dependsOn = [:]
+  def dependsOn = [ emailTemplates: "0.9 > *" ]
   def pluginExcludes = [
       "grails-app/views/error.gsp",
       "grails-app/domain/org/grails/plugin/emailTemplates/test/*"
