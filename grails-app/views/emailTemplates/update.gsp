@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <ckeditor:resources/>
-  </head>
   <body>
     <div class="row-fluid">
       <div class="span12">
@@ -47,18 +44,9 @@
                  <input class="span6" type="text" name="subject" value="${emailTemplateData?.subject}" style="margin:0;font-weight:bold;width:100%;"/>
               </div>
               <hr />
-              <ckeditor:config var="toolbar_EmailTemplates">
-              [
-                { name: 'basic', items: [ 'Source' ] },
-                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-               { name: 'links', items: [ 'Image', 'Link', 'Unlink' ] },
-               { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', 'Table', 'HorizontalRule'] },
-               { name: 'styles', items: [ 'Styles', 'Format', 'TextColor' ] },
-              ]
-              </ckeditor:config>              
-              <ckeditor:editor name="body" height="400px" width="98%" toolbar="EmailTemplates" enterMode="CKEDITOR.ENTER_BR">
-                <%= emailTemplateData?.body %>
-              </ckeditor:editor>
+                       
+              <textarea name="body" height="400px" width="98%" class="wysiwyg"><%= emailTemplateData?.body %></textarea>
+
             </div>
             <div class="form-actions">
               <div class="pull-left">
